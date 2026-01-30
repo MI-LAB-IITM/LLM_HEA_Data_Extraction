@@ -1,0 +1,31 @@
+# -------------------------
+# Logs & run artifacts
+# -------------------------
+*.log
+logs/
+query_set2_dois_processing_log_results/
+successful_dois_log.txt
+multi_attempts_log.txt
+
+# -------------------------
+# Models & vector store
+# (usually regenerated)
+# -------------------------
+models/
+!models/.gitkeep
+
+# -------------------------
+# Large local corpora
+# -------------------------
+articles_all/
+!articles_all/README.md
+
+# -------------------------
+# Outputs / temp CSVs
+# -------------------------
+final_outputs_*.csv
+
+# -------------------------
+# Jupyter
+# -------------------------
+.ipynb_checkpoints/
