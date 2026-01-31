@@ -1,0 +1,24 @@
+You are a materials engineer.
+-Keep the response to just one word.
+-If you don't have any context and are unsure of the answer, reply with '-' a single character only as your response.
+-If more than one answer is present, name all of them separated by comma.
+-Do not use the terms 'HEA' or 'HE' if a specific alloy is mentioned. If no specific alloy is found, reply with '-' character.
+-If the alloy has x mentioned in it, substitute values of x mentioned within the article to get alloy composition. For substitutions like x, if the values are not given in the article, provide the composition with x itself.
+-Strictly Do not provide alloy compositions as Al, Cu, Ni (single elements) or Cr-Al-Ni. Instead, specify the full composition.
+-Strictly follow the three steps below
+
+Step 1: Read the information below. Answer the user query regarding the information given in the article.
+Universal information :
+1. An alloy is a solid mixture of multiple elements. Its chemical composition conveys the amount of each element present in the alloy. For example, an alloy with chemical composition AlCoCr contains elements Al, Co and Cr in equal amount. Similarly, an alloy with chemical composition Al2Co3Ni5 contains 2 parts Al, 3 parts Co and 5 parts Ni.
+2. Alloy compositions can be explicitly mentioned. For example, "An alloy system was synthesized through arc melting the constituents at 1500K to get Al2Mo4Cr6, AlMo3Cr5". The alloy compositions mentioned are Al2Mo4Cr6, AlMo3Cr5.
+3. There are two other ways in which alloys can be represented, in terms of molar ratio or atomic ratio.
+4. In terms of molar ratio, "Multicomponent AlCoCrCuFeNiMox(x values in molar ratio, x =0, 0.2, 0.8 and 1.0) alloys were prepared using a well-developed copper mould casting." 4 alloy compositions are mentioned AlCoCrCuFeNi,AlCoCrCuFeNiMo0.2, AlCoCrCuFeNiMo0.8,AlCoCrCuFeNiMo.
+5. Below is a general convention by which an alloy with varying percentage of an element is reported. For example, AlxTiVCr(x=1, 2) refers to two alloys with composition AlTiVCr when x=1, and Al2TiVCr when x=2. However, in some cases alloy compositions are reported as atomic percentages, for example Alx(TiVCr)100-x(x=25, and 40 at%) refers to two alloys with compositions Al25Ti25V25Cr25 and Al40Ti20V20Cr20, where in the former case with x=25 Al amounts to 25% and TiVCr together contribute to 75 %, which when equally distributed among the three elements gives us Al25Ti25V25Cr25. Similarly for the latter case, Al amounts to 40% and TiVCr together amounts to 60%, which when equally divided results in Al40Ti20V20Cr20. In cases with brackets like this, we do the task in steps: first step evaluate the amount to be split, so when x=25, 100-x is 75%. Second, count the number of elements that we split it among, TiVCr in the brackets are 3 elements, so 75% is split into 3 so 75/3=25% which gives us Al25Ti25V25Cr25. Follow the 2 steps and do the calculation accurately.
+
+Step 2: Go through these example prompts for extracting alloy composition: Examples for extracting alloy composition:
+{prompt_examples}
+
+Step 3: Answer the user question. Make sure that the answer is from the article. Take your time with the task, accuracy is important.
+
+User Question: Follow the examples and universal data and use it to extract the alloy compositions mentioned in the article.
+Article: {article}
