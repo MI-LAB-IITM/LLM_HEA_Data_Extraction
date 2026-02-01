@@ -1,0 +1,103 @@
+{#
+Prompt template for extracting material properties from tables in literature.
+Using GPT-4o or GPT 4o mini based on the structure of the table for this prompt.
+#}
+
+Instructions:
+1. The context section contains definitions of various material properties labelled by an expert after going through tables in literature. These are the potential properties that you can find in the table along with some description that can aid you. The table section contains a table caption and a table. Your task is to identify the properties from the context section that are described in the table. If no property from the context section is described in the table, reply with a '-'.
+2. If one more properties from the context section is present in the table return a table in CSV format that contains the alloy composition, processing condition(if available in the table), testing condition(if available in the table) the property present in table(as written in the context section), property value and units as present in the table provided.
+3. Note that the table may contain the same property as in the context but with a different naming convention. Use the context to understand the property and decide if any property from the context is described in the table. If some property is mentioned with a heading that you are unsure of from the context provided, do not extract that property. Extract only those properties available in the context.
+4. Since you are extracting data in csv format, makes sure that each row of extraction has exactly 5 commas. Use semicolon if needed in the testing conditions(avoid use of commas within a cell as this is necessary to identify the csv table).
+5. Refer to the examples and follow the above instructions strictly.
+
+Context(the property column in the extracted table strictly be these property names only):
+{properties}
+
+Key Notes:
+1. There are a lot of properties with clear definitions. In addition to the properties mentioned above, if you are sure that one of the following properties is present, extract them in the prescribed format: Density, Melting point, Boiling point, Shear modulus, Young's modulus(elastic modulus), Poisson's ratio.
+2. Properties for a material cannot always be described through a number alone. For example, the Young's modulus of a material can vary with temperature and this is usually mentioned in the table details; be sure to extract this and report it as a testing condition. 
+3. An alloy system is usually subjected to some processing before property is evaluated, a common example is arc-melting or as-casting an alloy at a particular temperature; be sure to extract this and report it as a testing condition.
+4. Some properties like refractive index, Poisson's ratio do not have units, report units as "-".
+5. Since material systems may have hundreds of property to describe the system, the most frequently occuring ones and listed in the above sections. However, if a table contains units, value and details of any other property mention it as "Others(<insert property name>)" in the Property column and report it with value and unit in the same format as other properties.
+
+Examples of an expert performing your task(in addition to property names you have been given descriptions to aid you):
+Go through these example prompts:
+
+Example 1:
+Table Caption: "Table 4. Shear Modulus(GPa) measured at various temperatures for 3 alloys."
+Table Data:
+Temperature (K), Pressure (bar),FeNiCoCr,FeNi,Ni
+77,1,-,68,84
+203,2,-,66,80
+293,2.5,84,62,76
+Context: Elastic Moduli, Shear Modulus, Ultimate Tensile Strength, Elasticity
+
+Question: Extract the properties of alloy systems present in the context from the following table data. Provide the data in comma-separated values (CSV) format only.
+Expected Output:
+Alloy,Processing condition, Testing condition, Property,Value,Unit
+FeNiCoCr,-,Temperature(in K): 293 ;Pressure(in bar) 2.5,Shear Modulus,84,GPa
+FeNi,-,Temperature(in K): 77 ;Pressure(in bar) 1,Shear Modulus,68,GPa
+FeNi,-,Temperature(in K): 203 ;Pressure(in bar) 2,Shear Modulus,66,GPa
+FeNi,-,Temperature(in K): 293 ;Pressure(in bar) 2.5,Shear Modulus,62,GPa
+Ni,-,Temperature(in K): 77 ;Pressure(in bar) 1,Shear Modulus,84,GPa
+Ni,-,Temperature(in K): 203 ;Pressure(in bar) 2,Shear Modulus,80,GPa
+Ni,-,Temperature(in K): 293 ;Pressure(in bar) 2.5,Shear Modulus,76,GPa
+
+Example 2:
+Table Caption: "Table 4. Vickers microhardness of Al0.5CoCrCuFeNi alloys in four different states."
+Table Data:
+State,Micro-hardness (HV)
+As-cast,208±2
+As-forged,350±3
+As-homogenized-FC,265±4
+As-homogenized-WQ,154±4
+Context: Hardness, Strain, Compressive Strength, Elastic Moduli
+
+Question: Extract the properties of alloy systems present in the context from the following table data. Provide the data in comma-separated values (CSV) format only.
+Expected Output:
+Alloy,Processing condition,Testing condition,Property,Value,Unit
+Al0.5CoCrCuFeNi,As-cast,-,Hardness,208±2,HV
+Al0.5CoCrCuFeNi,As-forged,-,Hardness,350±3,HV
+Al0.5CoCrCuFeNi,As-homogenized-FC,-,Hardness,265±4,HV
+Al0.5CoCrCuFeNi,As-homogenized-WQ,-,Hardness,154±4,HV
+
+Example 3:
+Table Caption: "Table 3. Summary of results on friction properties of hot-forged alloys tested"
+Table Data:
+Alloy peak coefficient of friction (µp)
+Al0.5CoCrCuFeNi,0.65 ± 0.04
+Al1.0CoCrCuFeNi,0.65 ± 0.03
+Al2.0CoCrCuFeNi,0.70 ± 0.02
+Context: Hardness, Lattice constants, Refractive index
+
+Question: Extract the properties of alloy systems present in the context from the following table data. Provide the data in comma-separated values (CSV) format only.
+Expected Output:
+Alloy,Processing condition,Testing condition,Property,Value,Unit
+Al0.5CoCrCuFeNi,hot-forged,-,Others(coefficient of friction),0.65 ± 0.04,-
+Al1.0CoCrCuFeNi,hot-forged,-,Others(coefficient of friction),0.65 ± 0.03,-
+Al2.0CoCrCuFeNi,hot-forged,-,Others(coefficient of friction),0.70 ± 0.02,-
+
+Example 4:
+Table Caption: "Table 2. Chemical compositions of worn surface and wear debris of AlxCoCrCuFeNi alloys in atomic percentage"
+Table Data:
+x-Value,Condition,Al,Co,Cr,Cu,Fe,Ni,O
+0.5,Nominal,9.09,18.18,18.18,18.18,18.18,18.18,
+0.5,Worn surface,7.2,16.5,17.3,14.7,17.5,16.2,12.4
+0.5,Wear debris,6.1,16.4,16.1,15.5,16.5,15.3,16.2
+Context: Hardness, Lattice constants, Chemical composition
+
+Question: Extract the properties of alloy systems present in the context from the following table data. Provide the data in comma-separated values (CSV) format only.
+Expected Output:
+Alloy,Processing condition,Testing condition,Property,Value,Unit
+Al0.5CoCrCuFeNi,-,Nominal,Chemical Composition,Al: 9.09; Co: 18.18; Cr: 18.18; Cu: 18.18; Fe: 18.18; Ni: 18.18,at%
+Al0.5CoCrCuFeNi,-,Worn surface,Chemical Composition,Al: 7.2; Co: 16.5; Cr: 17.3; Cu: 14.7; Fe: 17.5; Ni: 16.2; O: 12.4,at%
+Al0.5CoCrCuFeNi,-,Wear debris,Chemical Composition,Al: 6.1; Co: 16.4; Cr: 16.1; Cu: 15.5; Fe: 16.5; Ni: 15.3; O: 16.2,at%
+
+
+Table:
+Table Caption: "{table_caption}"
+Table Data:\n{table_data}
+
+Table Footer: "{table_footer if table_footer else ''}"
+Question: Extract the properties of alloy systems present in the context from the following table data. Provide the data in comma-separated values (CSV) format only.
+Output: 

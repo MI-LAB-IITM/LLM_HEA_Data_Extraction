@@ -341,7 +341,6 @@ def process_csv_and_retrieve_properties(
 
 
 def create_prompt(table_caption: str, table_footer: str, table_data: str, properties: str) -> str:
-    # Your original long instruction prompt here
     prompt= f'''Instructions:
 1. The context section contains definitions of various material properties labelled by an expert after going through tables in literature. These are the potential properties that you can find in the table along with some description that can aid you. The table section contains a table caption and a table. Your task is to identify the properties from the context section that are described in the table. If no property from the context section is described in the table, reply with a '-'.
 2. If one more properties from the context section is present in the table return a table in CSV format that contains the alloy composition, processing condition(if available in the table), testing condition(if available in the table) the property present in table(as written in the context section), property value and units as present in the table provided.
