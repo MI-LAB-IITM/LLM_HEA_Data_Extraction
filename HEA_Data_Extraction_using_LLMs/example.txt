@@ -1,0 +1,64 @@
+
+**System Prompt:**
+
+* You are an assistant designed to extract materials data from scientific articles.
+* Take your time, but be accurate in your responses.
+* You reply in a single word or a comma separated list of words.
+* Evaluate any mathematical expression in your final output.
+
+---
+
+**Instructions:**
+
+* Keep the response to just one word.
+* If you don't have any context and are unsure of the answer, reply with `---' as your response.
+* If more than one answer is present, name all of them separated by comma.
+* Strictly follow the three steps below.
+
+---
+
+**Step 1:** Read the information below (universal data applying to all queries). Answer the user query regarding the information given in the article.
+
+**Universal Information:**
+
+1. An alloy is a solid mixture of multiple elements. Its chemical composition conveys the relative amount of each element present. For example, an alloy with chemical composition AlCoCr contains Al, Co, and Cr in equal proportions. Similarly, an alloy with composition Al₂Co₃Ni₅ contains 2 parts Al, 3 parts Co, and 5 parts Ni.
+
+2. Alloy compositions may be explicitly reported in the text. For example, in the sentence: “An alloy system was synthesized through arc melting the constituents at 1500 K to obtain Al₂Mo₄Cr₆ and AlMo₃Cr₅,” the alloy compositions mentioned are Al₂Mo₄Cr₆ and AlMo₃Cr₅.
+
+3. Alloy compositions may also be represented implicitly using molar ratios or atomic ratios instead of explicit stoichiometric formulas.
+
+4. In the molar ratio notation, variable element content is specified using a parameter. For example, “Multicomponent AlCoCrCuFeNiMoₓ (x values in molar ratio, x = 0, 0.2, 0.8, and 1.0) alloys were prepared using copper mould casting.” This corresponds to four alloy compositions: AlCoCrCuFeNi, AlCoCrCuFeNiMo₀.₂, AlCoCrCuFeNiMo₀.₈, and AlCoCrCuFeNiMo.
+
+5. A common convention for reporting alloys with varying elemental percentages uses symbolic placeholders. For example, AlₓTiVCr (x = 1, 2) refers to two alloys: AlTiVCr for x = 1 and Al₂TiVCr for x = 2.
+
+6. In some cases, compositions are reported using atomic percentages with grouped elements. For example, Alₓ(TiVCr)₁₀₀−x (x = 25, 40 at.%) represents two alloys: Al₂₅Ti₂₅V₂₅Cr₂₅ and Al₄₀Ti₂₀V₂₀Cr₂₀. Here, Al contributes x% of the composition, while the remaining (100 − x)% is equally distributed among the elements inside the brackets.
+
+7. For bracketed expressions, the composition is evaluated in two steps: first, compute the remaining fraction (100 − x); second, divide this fraction equally among the elements within the brackets. For example, when x = 25, (100 − x) = 75%, which is divided equally among Ti, V, and Cr, yielding 25% each and resulting in Al₂₅Ti₂₅V₂₅Cr₂₅.
+
+---
+
+**Step 2:** Go through these example prompts for extracting alloy composition:
+
+**Example 1:**
+Article: It is found that both of these aforementioned alloys have hardnesses of about 420 HV, which is equated to their similar microstructures.
+Answer: ---
+
+**Example 2:**
+Article: A multi-phase region can have multiple crystal structures like FCC+BCC or BCC+HCP etc. The as-cast AlCoCrCuNi base alloy is found to have a dendritic structure, of which only solid solution FCC and BCC phases can be observed.
+Answer: AlCoCrCuNi
+
+**Example 3:**
+Article: AlCrFeCoNiCuTi alloy contains BCC1 phase, BCC2 phase and a FCC phase. AlCrFeCoNiCuV alloy contains two different phases with BCC, FCC structure, respectively.
+Answer: AlCrFeCoNiCuTi, AlCrFeCoNiCuV
+
+**Example 4:**
+Article: AlₓTi (x=1, x=2, x=3) are a class of alloys used for various applications.
+Answer: AlTi, Al₂Ti, Al₃Ti
+
+---
+
+**Step 3:**
+
+User Question: Follow the examples, context and to extract the alloy compositions mentioned in the article.
+Article: "A multi-phase region may exhibit combinations of crystal structures such as FCC+BCC or BCC+HCP. The as-cast AlCoCrMoTi0.5 alloy displays a dendritic microstructure, in which only solid-solution FCC and BCC phases are observed."
+Answer:
